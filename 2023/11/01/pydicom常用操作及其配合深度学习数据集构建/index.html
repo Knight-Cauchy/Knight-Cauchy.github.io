@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="读取dcm文件12345from pydicom import dcmreadfrom pydicom.data import get_testdata_filefilename &#x3D; get_testdata_file(&quot;your dcm file path&quot;)ds &#x3D; dcmread(filename)ds.PixelData  上述代码会使用官方库中自带的dcm数据（名称填">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pydicom常用操作及其配合深度学习数据集构建">
+<meta property="og:url" content="http://example.com/2023/11/01/pydicom%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%8F%8A%E5%85%B6%E9%85%8D%E5%90%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA/index.html">
+<meta property="og:site_name" content="橙橙子的小站">
+<meta property="og:description" content="读取dcm文件12345from pydicom import dcmreadfrom pydicom.data import get_testdata_filefilename &#x3D; get_testdata_file(&quot;your dcm file path&quot;)ds &#x3D; dcmread(filename)ds.PixelData  上述代码会使用官方库中自带的dcm数据（名称填">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-01T12:55:28.000Z">
+<meta property="article:modified_time" content="2023-11-04T03:27:12.252Z">
+<meta property="article:author" content="Knight Cauchy">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/11/01/pydicom%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%8F%8A%E5%85%B6%E9%85%8D%E5%90%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>pydicom常用操作及其配合深度学习数据集构建 | 橙橙子的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">橙橙子的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">施工中（希望一周一更）</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/01/pydicom%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%8F%8A%E5%85%B6%E9%85%8D%E5%90%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Knight Cauchy">
+      <meta itemprop="description" content="愿快乐常伴吾心">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="橙橙子的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          pydicom常用操作及其配合深度学习数据集构建
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-01 20:55:28" itemprop="dateCreated datePublished" datetime="2023-11-01T20:55:28+08:00">2023-11-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-11-04 11:27:12" itemprop="dateModified" datetime="2023-11-04T11:27:12+08:00">2023-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dcm%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">dicom</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="读取dcm文件"><a href="#读取dcm文件" class="headerlink" title="读取dcm文件"></a>读取dcm文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydicom <span class="keyword">import</span> dcmread</span><br><span class="line"><span class="keyword">from</span> pydicom.data <span class="keyword">import</span> get_testdata_file</span><br><span class="line">filename = get_testdata_file(<span class="string">&quot;your dcm file path&quot;</span>)</span><br><span class="line">ds = dcmread(filename)</span><br><span class="line">ds.PixelData </span><br></pre></td></tr></table></figure>
+<p>上述代码会使用官方库中自带的dcm数据（名称填在”your dcm file path”上），如果使用自己的数据则不用<code>get_testdata_file</code>，直接<code>dcmread()</code>中填入目标文件路径即可。该函数会返回一个<code>pydicom.dataset.FileDataset</code>类型的对象，代表了读取的DICOM文件内容，即此处的<code>ds</code>。而ds.PixelData会返回一串二进制数据。<br>如果文件需要批量加载，如构建数据集，常常用到os库。</p>
+<h3 id="获取数据元素和加载影像图片"><a href="#获取数据元素和加载影像图片" class="headerlink" title="获取数据元素和加载影像图片"></a>获取数据元素和加载影像图片</h3><p>和字典一样，可以使用<code>ds.tag</code>或者<code>ds.Attribute Name</code>直接访问和修改数据元素。使用<code>ds.get()</code>则更安全。也支持用python中的迭代器访问。</p>
+<h4 id="pixel-data"><a href="#pixel-data" class="headerlink" title="pixel data"></a>pixel data</h4><p>读取PixelData使用函数<code>ds.pixel_array</code>（需要Numpy库）可直接读取二进制数据并返回一个储存像素值的ndarray数组，二维图像对应二维数组，三维图像（含切片数或者RGB）对应三维数组，可使用Numpy库进行各种处理，也可以修改（注意保存或写回原数据）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># example: zero anything &lt; 300</span></span><br><span class="line">arr = ds.pixel_array</span><br><span class="line">arr[arr &lt; <span class="number">300</span>] = <span class="number">0</span></span><br><span class="line">ds.PixelData = arr.tobytes()</span><br><span class="line">ds.save_as(<span class="string">&quot;temp.dcm&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="overlay-data"><a href="#overlay-data" class="headerlink" title="overlay data"></a>overlay data</h4><p>使用<code>ds.overlay_array</code>可以返回叠加层信息，这是一些额外的图形信息，通常用于在图像上标注一些重要的区域或特征。这些叠加数据以二进制形式存储在 DICOM 文件中，可以包含多个叠加层，每个叠加层都有自己的颜色、透明度等属性。（我目前还没用到）</p>
+<h4 id="waveform-data"><a href="#waveform-data" class="headerlink" title="waveform data"></a>waveform data</h4><p>主要是时间序列信号，通常用于记录生理信号，如心电图、脉搏波等。DICOM 文件可以包含一个或多个波形数据对象，每个对象包含了一段时间内的采样值、采样率等信息。（同上，目前还没用过）</p>
+<h3 id="构建数据集"><a href="#构建数据集" class="headerlink" title="构建数据集"></a>构建数据集</h3><p>有了以上的知识和一些深度学习的了解即可构建一个医学图像数据集了，本文使用的是pytorch库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pydicom</span><br><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> torchvision.transforms <span class="keyword">as</span> transforms</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> Dataset</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+<p>可能用到的库</p>
+<hr>
+<p>以下是训练集，其中考虑到数据可能很多，采用的是文件夹的列表的形式，即<code>image_folder</code>是一个文件夹路径的列表，<code>filelist</code>才是dcm文件路径的列表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">dicomDataset</span>(<span class="title class_ inherited__">Dataset</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, image_folder, label_folder, transform=<span class="literal">None</span></span>):</span><br><span class="line">        self.image_folder = image_folder</span><br><span class="line">        self.label_folder = label_folder</span><br><span class="line">        self.transform = transform</span><br><span class="line">        self.image_filelist = []</span><br><span class="line">        self.label_filelist = []</span><br><span class="line">        <span class="keyword">for</span> file_path <span class="keyword">in</span> image_folder:</span><br><span class="line">            self.image_filelist += [os.path.join(file_path, f) <span class="keyword">for</span> f <span class="keyword">in</span> os.listdir(file_path) <span class="keyword">if</span> f.endswith(<span class="string">&#x27;.dcm&#x27;</span>)]</span><br><span class="line">        <span class="keyword">for</span> file_path <span class="keyword">in</span> label_folder:</span><br><span class="line">            self.label_filelist += [os.path.join(file_path, f) <span class="keyword">for</span> f <span class="keyword">in</span> os.listdir(file_path) <span class="keyword">if</span> f.endswith(<span class="string">&#x27;.dcm&#x27;</span>)]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># self.image_filelist1 = [os.path.join(image_folder1, f) for f in os.listdir(image_folder) if f.endswith(&#x27;.dcm&#x27;)]</span></span><br><span class="line">        <span class="comment"># self.label_filelist1 = [os.path.join(label_folder1, f) for f in os.listdir(label_folder) if f.endswith(&#x27;.dcm&#x27;)]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__len__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.image_filelist)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getitem__</span>(<span class="params">self, idx</span>):</span><br><span class="line">        imagedcm = pydicom.dcmread(self.image_filelist[idx])</span><br><span class="line">        labeldcm = pydicom.dcmread(self.label_filelist[idx])</span><br><span class="line"></span><br><span class="line">        image = imagedcm.pixel_array</span><br><span class="line">        <span class="keyword">if</span> self.transform:</span><br><span class="line">            image = self.transform(image)</span><br><span class="line">        label = labeldcm.pixel_array</span><br><span class="line">        <span class="keyword">if</span> self.transform:</span><br><span class="line">            label = self.transform(label)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 返回的image和label是ndarray</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> image, label</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># folder 是文件夹名称路径的列表</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 预处理定义方法：</span></span><br><span class="line"><span class="comment"># preprocess = transforms.Compose([</span></span><br><span class="line"><span class="comment">#     transforms.ToTensor()</span></span><br><span class="line"><span class="comment"># ])</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>以下是训练集，和测试集基本相同，我之前是不会分割数据集所以写了两套（:rofl:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">testDataset</span>(<span class="title class_ inherited__">Dataset</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, test_image_folder, test_label_folder, transform=<span class="literal">None</span></span>):</span><br><span class="line">        self.image_folder = test_image_folder</span><br><span class="line">        self.label_folder = test_label_folder</span><br><span class="line">        self.transform = transform</span><br><span class="line">        self.image_filelist = []</span><br><span class="line">        self.label_filelist = []</span><br><span class="line">        <span class="keyword">for</span> file_path <span class="keyword">in</span> test_image_folder:</span><br><span class="line">            self.image_filelist += [os.path.join(file_path, f) <span class="keyword">for</span> f <span class="keyword">in</span> os.listdir(file_path) <span class="keyword">if</span> f.endswith(<span class="string">&#x27;.dcm&#x27;</span>)]</span><br><span class="line">        <span class="keyword">for</span> file_path <span class="keyword">in</span> test_label_folder:</span><br><span class="line">            self.label_filelist += [os.path.join(file_path, f) <span class="keyword">for</span> f <span class="keyword">in</span> os.listdir(file_path) <span class="keyword">if</span> f.endswith(<span class="string">&#x27;.dcm&#x27;</span>)]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># self.image_filelist1 = [os.path.join(image_folder1, f) for f in os.listdir(image_folder) if f.endswith(&#x27;.dcm&#x27;)]</span></span><br><span class="line">        <span class="comment"># self.label_filelist1 = [os.path.join(label_folder1, f) for f in os.listdir(label_folder) if f.endswith(&#x27;.dcm&#x27;)]</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__len__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.image_filelist)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getitem__</span>(<span class="params">self, idx</span>):</span><br><span class="line">        imagedcm = pydicom.dcmread(self.image_filelist[idx])</span><br><span class="line">        labeldcm = pydicom.dcmread(self.label_filelist[idx])</span><br><span class="line"></span><br><span class="line">        image = imagedcm.pixel_array</span><br><span class="line">        <span class="keyword">if</span> self.transform:</span><br><span class="line">            image = self.transform(image)</span><br><span class="line">        label = labeldcm.pixel_array</span><br><span class="line">        <span class="keyword">if</span> self.transform:</span><br><span class="line">            label = self.transform(label)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 返回的image和label是ndarray</span></span><br><span class="line">        <span class="keyword">return</span> image, label</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>展示图片的测试代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">preprocess = transforms.Compose([</span><br><span class="line">    transforms.ToTensor()</span><br><span class="line">])</span><br><span class="line"><span class="comment"># 这个transform得到张量，float32 </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">transform</span>(<span class="params">image_data</span>):</span><br><span class="line">    <span class="comment"># 将图像数据转换为float32类型，并归一化到0到1之间</span></span><br><span class="line">    converted_data = image_data.astype(numpy.float32) / <span class="number">65535.0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建一个组合的转换列表</span></span><br><span class="line">    data_transform = transforms.Compose([</span><br><span class="line">        transforms.ToTensor(),</span><br><span class="line">        <span class="comment"># 添加其他预处理或数据增强的转换</span></span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 应用转换列表</span></span><br><span class="line">    tensor_data = data_transform(converted_data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> tensor_data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dataset = dicomDataset(image_folder, label_folder, transform=transform)</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    idx = random.randint(<span class="number">200</span>, <span class="number">4000</span>)</span><br><span class="line">    image1, image2 = dataset[idx]</span><br><span class="line">    <span class="comment"># print(type(image1), type(image2))</span></span><br><span class="line">    <span class="comment"># 创建画布和子图</span></span><br><span class="line">    fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 绘制第一个图像</span></span><br><span class="line">    axes[<span class="number">0</span>].imshow(image1.squeeze(), cmap=<span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">    axes[<span class="number">0</span>].set_title(<span class="string">f&#x27;image<span class="subst">&#123;idx&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 绘制第二个图像 squeeze是在有transform的时候用的，因为transform把图片变成张量了</span></span><br><span class="line">    axes[<span class="number">1</span>].imshow(image2.squeeze(), cmap=<span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">    axes[<span class="number">1</span>].set_title(<span class="string">f&#x27;label<span class="subst">&#123;idx&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 删除子图的坐标轴</span></span><br><span class="line">    <span class="keyword">for</span> ax <span class="keyword">in</span> axes:</span><br><span class="line">        ax.axis(<span class="string">&#x27;off&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 展示图像</span></span><br><span class="line">    plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>下面是一个简单的U-net的网络，image是低剂量的PET图像，label是与之对应的标准剂量的PET图像，相当于一个去噪还原模型，受困于电脑配置目前只跑过一个batch，但是确实能跑（正确率怎么样那还未知<br>跑的时候可以去掉一些debug的时候写的东西。</p>
+<h2 id="网络结构："><a href="#网络结构：" class="headerlink" title="网络结构："></a>网络结构：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编码器，输入池化后/反卷积后的图片，两次卷积，第一次通道加倍/减半，第二次不变</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">coder</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, inchannels, outchannels</span>):</span><br><span class="line">        <span class="built_in">super</span>(coder, self).__init__()</span><br><span class="line">        self.conv1 = nn.Conv2d(in_channels=inchannels, out_channels=outchannels, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">        self.bn = nn.BatchNorm2d(outchannels)</span><br><span class="line">        self.relu = nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">        self.conv2 = nn.Conv2d(in_channels=outchannels, out_channels=outchannels, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = self.conv1(x)</span><br><span class="line">        x = self.bn(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv2(x)</span><br><span class="line">        x = self.bn(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上浮器，反卷积然后BN ReLu 然后cat拼接，实现skip connection</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">upconv</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, inchannels, outchannels</span>):</span><br><span class="line">        <span class="built_in">super</span>(upconv, self).__init__()</span><br><span class="line">        self.up = nn.ConvTranspose2d(inchannels, outchannels, kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line">        self.relu = nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">        self.bn = nn.BatchNorm2d(outchannels)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x, skip</span>):</span><br><span class="line">        x = self.up(x)</span><br><span class="line">        x = self.bn(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = torch.cat([x, skip], dim=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Unet</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, in_channels, out_channels</span>):</span><br><span class="line">        <span class="built_in">super</span>(Unet, self).__init__()</span><br><span class="line">        self.preconv = nn.Conv2d(in_channels, <span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">        self.encoder1 = coder(<span class="number">64</span>, <span class="number">64</span>)</span><br><span class="line">        self.encoder2 = coder(<span class="number">64</span>, <span class="number">128</span>)</span><br><span class="line">        self.encoder3 = coder(<span class="number">128</span>, <span class="number">256</span>)</span><br><span class="line">        self.centercoder = coder(<span class="number">256</span>, <span class="number">512</span>)</span><br><span class="line">        self.decoder1 = coder(<span class="number">512</span>, <span class="number">256</span>)</span><br><span class="line">        self.decoder2 = coder(<span class="number">256</span>, <span class="number">128</span>)</span><br><span class="line">        self.decoder3 = coder(<span class="number">128</span>, <span class="number">64</span>)</span><br><span class="line">        self.outconv = nn.Conv2d(<span class="number">64</span>, out_channels, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">        self.upconv1 = upconv(<span class="number">512</span>, <span class="number">256</span>)</span><br><span class="line">        self.upconv2 = upconv(<span class="number">256</span>, <span class="number">128</span>)</span><br><span class="line">        self.upconv3 = upconv(<span class="number">128</span>, <span class="number">64</span>)</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = self.preconv(x)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出64 360 360 实际输出：&quot;</span>, x.shape)</span><br><span class="line"></span><br><span class="line">        x2 = self.encoder1(x)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出64 360 360 实际输出：&quot;</span>, x2.shape)</span><br><span class="line"></span><br><span class="line">        x3 = self.encoder2(nn.functional.max_pool2d(x2, kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出128 180 180 实际输出：&quot;</span>, x3.shape)</span><br><span class="line"></span><br><span class="line">        x4 = self.encoder3(nn.functional.max_pool2d(x3, kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出256 90 90 实际输出：&quot;</span>, x4.shape)</span><br><span class="line"></span><br><span class="line">        x = self.centercoder(nn.functional.max_pool2d(x4, kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出512 45 45 实际输出：&quot;</span>, x.shape)</span><br><span class="line"></span><br><span class="line">        x = self.upconv1(x, x4)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出512 90 90 实际输出：&quot;</span>, x.shape)</span><br><span class="line"></span><br><span class="line">        x = self.decoder1(x)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出256 90 90 实际输出：&quot;</span>, x.shape)</span><br><span class="line"></span><br><span class="line">        x = self.upconv2(x, x3)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出256 180 180 实际输出：&quot;</span>, x.shape)</span><br><span class="line"></span><br><span class="line">        x = self.decoder2(x)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出128 180 180 实际输出：&quot;</span>, x.shape)</span><br><span class="line"></span><br><span class="line">        x = self.upconv3(x, x2)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出128 360 360 实际输出：&quot;</span>, x.shape)</span><br><span class="line"></span><br><span class="line">        x = self.decoder3(x)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出64 360 360 实际输出：&quot;</span>, x.shape)</span><br><span class="line"></span><br><span class="line">        x = self.outconv(x)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;预期输出1 360 360 实际输出：&quot;</span>, x.shape)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">    </span><br><span class="line"><span class="comment"># test代码</span></span><br><span class="line"><span class="comment"># in_channels = 1</span></span><br><span class="line"><span class="comment"># out_channels = 1</span></span><br><span class="line"><span class="comment"># my_model = Unet(in_channels, out_channels)</span></span><br><span class="line"><span class="comment"># input_data = torch.randn(1, in_channels, 360, 360)</span></span><br><span class="line"><span class="comment"># output = my_model(input_data)</span></span><br><span class="line"><span class="comment"># print(output.shape)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></h2><p>训练的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">transform</span>(<span class="params">image_data</span>):</span><br><span class="line">    converted_data = image_data.astype(numpy.float32) / <span class="number">65535.0</span></span><br><span class="line">    data_transform = transforms.Compose([</span><br><span class="line">        transforms.ToTensor()</span><br><span class="line">    ])</span><br><span class="line">    tensor_data = data_transform(converted_data)</span><br><span class="line">    <span class="keyword">return</span> tensor_data</span><br><span class="line"></span><br><span class="line">traindata = dcmdataset.dicomDataset(image_folder, label_folder, transform=transform)</span><br><span class="line">testdata = dcmdataset.testDataset(test_image_folder, test_label_folder, transform=transform)</span><br><span class="line"></span><br><span class="line">train_dataloader = DataLoader(traindata, batch_size=<span class="number">32</span>, shuffle=<span class="literal">True</span>)</span><br><span class="line">test_dataloader = DataLoader(testdata, batch_size=<span class="number">32</span>, shuffle=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(traindata), <span class="built_in">len</span>(testdata))</span><br><span class="line"></span><br><span class="line">mymodel = unet.Unet(<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">learning_rate = <span class="number">1e-3</span></span><br><span class="line">batch_size = <span class="number">32</span></span><br><span class="line">num_epochs = <span class="number">3</span></span><br><span class="line">loss_fn = nn.MSELoss()</span><br><span class="line">optimizer = optim.Adam(mymodel.parameters(), lr=<span class="number">0.001</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取一个 batch 的数据h</span></span><br><span class="line">inputs, labels = <span class="built_in">next</span>(<span class="built_in">iter</span>(train_dataloader))</span><br><span class="line">mymodel.train()</span><br><span class="line"><span class="comment"># 前向传播</span></span><br><span class="line">outputs = mymodel(inputs)</span><br><span class="line">loss = loss_fn(outputs, labels)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 反向传播和优化</span></span><br><span class="line">optimizer.zero_grad()</span><br><span class="line">loss.backward()</span><br><span class="line">optimizer.step()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印损失</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Loss: <span class="subst">&#123;loss.item():<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">mymodel.<span class="built_in">eval</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># # 训练代码（不知道能不能行）</span></span><br><span class="line"><span class="comment"># mymodel.train()</span></span><br><span class="line"><span class="comment"># for epoch in range(num_epochs):</span></span><br><span class="line"><span class="comment">#     # 在训练集上进行训练...</span></span><br><span class="line"><span class="comment">#     running_loss = 0.0</span></span><br><span class="line"><span class="comment">#     for inputs, labels in train_dataloader:</span></span><br><span class="line"><span class="comment">#         # 前向传播</span></span><br><span class="line"><span class="comment">#         outputs = mymodel(inputs)</span></span><br><span class="line"><span class="comment">#         loss = loss_fn(outputs, labels)</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">#         # 反向传播和优化</span></span><br><span class="line"><span class="comment">#         optimizer.zero_grad()</span></span><br><span class="line"><span class="comment">#         loss.backward()</span></span><br><span class="line"><span class="comment">#         optimizer.step()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#         running_loss += loss.item()</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">#     # 打印每个epoch的平均损失</span></span><br><span class="line"><span class="comment">#     print(f&quot;Epoch &#123;epoch+1&#125;/&#123;num_epochs&#125;, Loss: &#123;running_loss/len(train_dataloader):.4f&#125;&quot;)</span></span><br><span class="line"><span class="comment"># # 使用测试集评估模型</span></span><br><span class="line"><span class="comment"># mymodel.eval()</span></span><br><span class="line"><span class="comment"># with torch.no_grad():</span></span><br><span class="line"><span class="comment">#     total_loss = 0.0</span></span><br><span class="line"><span class="comment">#     for inputs, labels in test_dataloader:</span></span><br><span class="line"><span class="comment">#         outputs = mymodel(inputs)</span></span><br><span class="line"><span class="comment">#         loss = loss_fn(outputs, labels)</span></span><br><span class="line"><span class="comment">#         total_loss += loss.item()</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">#     avg_loss = total_loss / len(test_dataloader)</span></span><br><span class="line"><span class="comment">#     print(f&quot;Test Loss: &#123;avg_loss:.4f&#125;&quot;)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/01/dcm%E6%95%B0%E6%8D%AE%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D%EF%BC%88%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3%EF%BC%89/" rel="prev" title="dcm数据简单介绍（个人理解）">
+      <i class="fa fa-chevron-left"></i> dcm数据简单介绍（个人理解）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/" rel="next" title="slicer中如何做segmentation">
+      slicer中如何做segmentation <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96dcm%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">读取dcm文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%85%83%E7%B4%A0%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%BD%B1%E5%83%8F%E5%9B%BE%E7%89%87"><span class="nav-number">2.</span> <span class="nav-text">获取数据元素和加载影像图片</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pixel-data"><span class="nav-number">2.1.</span> <span class="nav-text">pixel data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#overlay-data"><span class="nav-number">2.2.</span> <span class="nav-text">overlay data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#waveform-data"><span class="nav-number">2.3.</span> <span class="nav-text">waveform data</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">3.</span> <span class="nav-text">构建数据集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="nav-number"></span> <span class="nav-text">网络结构：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101import torchfrom torch import nn# 编码器，输入池化后&#x2F;反卷积后的图片，两次卷积，第一次通道加倍&#x2F;减半，第二次不变class coder(nn.Module):    def __init__(self, inchannels, outchannels):        super(coder, self).__init__()        self.conv1 &#x3D; nn.Conv2d(in_channels&#x3D;inchannels, out_channels&#x3D;outchannels, kernel_size&#x3D;3, padding&#x3D;1)        self.bn &#x3D; nn.BatchNorm2d(outchannels)        self.relu &#x3D; nn.ReLU(inplace&#x3D;True)        self.conv2 &#x3D; nn.Conv2d(in_channels&#x3D;outchannels, out_channels&#x3D;outchannels, kernel_size&#x3D;3, padding&#x3D;1)        def forward(self, x):        x &#x3D; self.conv1(x)        x &#x3D; self.bn(x)        x &#x3D; self.relu(x)        x &#x3D; self.conv2(x)        x &#x3D; self.bn(x)        x &#x3D; self.relu(x)        return x# 上浮器，反卷积然后BN ReLu 然后cat拼接，实现skip connectionclass upconv(nn.Module):    def __init__(self, inchannels, outchannels):        super(upconv, self).__init__()        self.up &#x3D; nn.ConvTranspose2d(inchannels, outchannels, kernel_size&#x3D;2, stride&#x3D;2)        self.relu &#x3D; nn.ReLU(inplace&#x3D;True)        self.bn &#x3D; nn.BatchNorm2d(outchannels)    def forward(self, x, skip):        x &#x3D; self.up(x)        x &#x3D; self.bn(x)        x &#x3D; self.relu(x)        x &#x3D; torch.cat([x, skip], dim&#x3D;1)        return xclass Unet(nn.Module):    def __init__(self, in_channels, out_channels):        super(Unet, self).__init__()        self.preconv &#x3D; nn.Conv2d(in_channels, 64, kernel_size&#x3D;3, padding&#x3D;1)        self.encoder1 &#x3D; coder(64, 64)        self.encoder2 &#x3D; coder(64, 128)        self.encoder3 &#x3D; coder(128, 256)        self.centercoder &#x3D; coder(256, 512)        self.decoder1 &#x3D; coder(512, 256)        self.decoder2 &#x3D; coder(256, 128)        self.decoder3 &#x3D; coder(128, 64)        self.outconv &#x3D; nn.Conv2d(64, out_channels, kernel_size&#x3D;3, padding&#x3D;1)        self.upconv1 &#x3D; upconv(512, 256)        self.upconv2 &#x3D; upconv(256, 128)        self.upconv3 &#x3D; upconv(128, 64)        def forward(self, x):        x &#x3D; self.preconv(x)        print(&quot;预期输出64 360 360 实际输出：&quot;, x.shape)        x2 &#x3D; self.encoder1(x)        print(&quot;预期输出64 360 360 实际输出：&quot;, x2.shape)        x3 &#x3D; self.encoder2(nn.functional.max_pool2d(x2, kernel_size&#x3D;2, stride&#x3D;2))        print(&quot;预期输出128 180 180 实际输出：&quot;, x3.shape)        x4 &#x3D; self.encoder3(nn.functional.max_pool2d(x3, kernel_size&#x3D;2, stride&#x3D;2))        print(&quot;预期输出256 90 90 实际输出：&quot;, x4.shape)        x &#x3D; self.centercoder(nn.functional.max_pool2d(x4, kernel_size&#x3D;2, stride&#x3D;2))        print(&quot;预期输出512 45 45 实际输出：&quot;, x.shape)        x &#x3D; self.upconv1(x, x4)        print(&quot;预期输出512 90 90 实际输出：&quot;, x.shape)        x &#x3D; self.decoder1(x)        print(&quot;预期输出256 90 90 实际输出：&quot;, x.shape)        x &#x3D; self.upconv2(x, x3)        print(&quot;预期输出256 180 180 实际输出：&quot;, x.shape)        x &#x3D; self.decoder2(x)        print(&quot;预期输出128 180 180 实际输出：&quot;, x.shape)        x &#x3D; self.upconv3(x, x2)        print(&quot;预期输出128 360 360 实际输出：&quot;, x.shape)        x &#x3D; self.decoder3(x)        print(&quot;预期输出64 360 360 实际输出：&quot;, x.shape)        x &#x3D; self.outconv(x)        print(&quot;预期输出1 360 360 实际输出：&quot;, x.shape)        return x    # test代码# in_channels &#x3D; 1# out_channels &#x3D; 1# my_model &#x3D; Unet(in_channels, out_channels)# input_data &#x3D; torch.randn(1, in_channels, 360, 360)# output &#x3D; my_model(input_data)# print(output.shape)</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Knight Cauchy</p>
+  <div class="site-description" itemprop="description">愿快乐常伴吾心</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Knight Cauchy</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
