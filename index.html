@@ -3,9 +3,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>橙橙子的小站</title>
+    <title>橙橙子の小站</title>
     <meta name="author" content="Knight Cauchy" />
-    <meta name="description" content="愿快乐常伴吾心" />
+    <meta name="description" content="good good study, day day up" />
     <meta name="keywords" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <link rel="icon" href="/images/avatar.jpg" />
@@ -55,7 +55,7 @@
         <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
     <nav id="desktop-menu">
         <a class="title" href="/">
-            <span>橙橙子的小站</span>
+            <span>橙橙子の小站</span>
         </a>
         
         <a href="/">
@@ -87,7 +87,7 @@
     <nav id="mobile-menu">
         <div class="title" @click="showMenuItems = !showMenuItems">
             <i class="fa-solid fa-bars fa-fw"></i>
-            <span>&emsp;橙橙子的小站</span>
+            <span>&emsp;橙橙子の小站</span>
         </div>
         <transition name="slide">
             <div class="items" v-show="showMenuItems">
@@ -155,9 +155,9 @@
         <span class="loop"></span>
         <span class="info">
             <div class="wrap">
-                <h1>橙橙子的小站</h1>
-                <h3>施工中（希望一周一更）</h3>
-                <h5>愿快乐常伴吾心</h5>
+                <h1>橙橙子の小站</h1>
+                <h3>施工中...</h3>
+                <h5>good good study, day day up</h5>
             </div>
         </span>
     </div>
@@ -165,6 +165,43 @@
 <div id="home-posts-wrap" true ref="homePostsWrap">
     <div id="home-posts">
         
+
+<div class="post">
+    <a href="/2024/01/24/%E8%AF%BBISSUnet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">
+        <h2 class="post-title">读ISSUnet论文笔记</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/1/24
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h2 id="文章中的要点"><a href="#文章中的要点" class="headerlink" title="文章中的要点"></a>文章中的要点</h2><ol>
+<li>挑战赛的内容是后处理的，所以我们的模型也是后处理模型</li>
+<li>输入单通道低剂量的三维图像patch，输出相应的去噪图像patch</li>
+<li>模型如图<img src="/2024/01/24/%E8%AF%BBISSUnet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/image.png" alt="ISS-Unet"></li>
+<li>使用pixelUNshuffle将图像转换成8通道(3D)，对于2D就是四通道。</li>
+<li>可能有必要把图片resize成128*128大小</li>
+</ol>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/2024/01/24/%E8%AF%BBISSUnet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
+</div>
 
 <div class="post">
     <a href="/2023/11/01/%E5%AD%A6%E4%B9%A0%E7%94%A8python%E5%BC%80%E5%8F%91slicer%E7%9B%B8%E5%85%B3%E6%8F%92%E4%BB%B6/">
@@ -243,7 +280,7 @@
     <div class="category-and-date">
         
         <span class="category">
-            <a href="/categories/dcm%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
+            <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -282,7 +319,7 @@
     <div class="category-and-date">
         
         <span class="category">
-            <a href="/categories/dcm%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
+            <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -332,7 +369,7 @@
         
         <span class="tag">
             
-            <a href="/tags/dcm/" style="color: #00a596">dcm</a>
+            <a href="/tags/dcm/" style="color: #ffa2c4">dcm</a>
         </span>
         
     </div>
@@ -383,7 +420,7 @@
     <div id="footer-wrap">
         <div>
             &copy;
-            2022 - 2023 橙橙子的小站
+            2022 - 2024 橙橙子の小站
             <span id="footer-icon">
                 <i class="fa-solid fa-font-awesome fa-fw"></i>
             </span>

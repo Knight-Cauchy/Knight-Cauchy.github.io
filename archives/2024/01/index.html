@@ -3,9 +3,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Categories: dicom | 橙橙子的小站</title>
+    <title>Archives | 橙橙子の小站</title>
     <meta name="author" content="Knight Cauchy" />
-    <meta name="description" content="愿快乐常伴吾心" />
+    <meta name="description" content="good good study, day day up" />
     <meta name="keywords" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <link rel="icon" href="/images/avatar.jpg" />
@@ -53,7 +53,7 @@
         <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
     <nav id="desktop-menu">
         <a class="title" href="/">
-            <span>橙橙子的小站</span>
+            <span>橙橙子の小站</span>
         </a>
         
         <a href="/">
@@ -85,7 +85,7 @@
     <nav id="mobile-menu">
         <div class="title" @click="showMenuItems = !showMenuItems">
             <i class="fa-solid fa-bars fa-fw"></i>
-            <span>&emsp;橙橙子的小站</span>
+            <span>&emsp;橙橙子の小站</span>
         </div>
         <transition name="slide">
             <div class="items" v-show="showMenuItems">
@@ -144,103 +144,129 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="archives">
+            
+<div id="archives">
     
-    <div class="categories-tags">
+    <div id="timeline-wrap" ref="timeline">
         
-        
-        
-        <span>
-            <a href="/categories/dcm%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                dicom
-            </a>
-        </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/categories/slicer/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                slicer
-            </a>
-        </span>
-        
-        
-    </div>
-    
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/11/1</div>
-            <a href="/2023/11/01/pydicom%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%8F%8A%E5%85%B6%E9%85%8D%E5%90%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA/">
-                <h3>pydicom常用操作及其配合深度学习数据集构建</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/dcm%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        dicom
-                    </a>
-                </span>
-                
-                
-            </div>
-        </div>
-    </div>
-    
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/11/1</div>
-            <a href="/2023/11/01/dcm%E6%95%B0%E6%8D%AE%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D%EF%BC%88%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3%EF%BC%89/">
-                <h3>dcm数据简单介绍（个人理解）</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/dcm%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        dicom
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
+        <div class="timeline" data-title="dcm数据简单介绍（个人理解）">
+            <div class="timeline-tail"></div>
+            <div class="timeline-content">
+                <div class="item-time">2023/11/1</div>
+                <a href="/2023/11/01/dcm%E6%95%B0%E6%8D%AE%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D%EF%BC%88%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3%EF%BC%89/">
+                    <h3>dcm数据简单介绍（个人理解）</h3>
+                </a>
+                <div class="info">
+                    
+                    <span class="category">
+                        <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
+                            <span class="icon">
+                                <i class="fa-solid fa-bookmark fa-fw"></i>
+                            </span>
+                            dicom
+                        </a>
                     </span>
                     
                     
-                    <span class="tag">
+                    <span class="tags">
+                        <span class="icon">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </span>
                         
-                        <a href="/tags/dcm/" style="color: #00a596">dcm</a>
+                        
+                        <span class="tag">
+                            
+                            <a href="/tags/dcm/" style="color: #ff7d73">dcm</a>
+                        </span>
+                        
                     </span>
                     
-                </span>
-                
+                </div>
             </div>
         </div>
+        
+        <div class="timeline" data-title="pydicom常用操作及其配合深度学习数据集构建">
+            <div class="timeline-tail"></div>
+            <div class="timeline-content">
+                <div class="item-time">2023/11/1</div>
+                <a href="/2023/11/01/pydicom%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%8F%8A%E5%85%B6%E9%85%8D%E5%90%88%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA/">
+                    <h3>pydicom常用操作及其配合深度学习数据集构建</h3>
+                </a>
+                <div class="info">
+                    
+                    <span class="category">
+                        <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
+                            <span class="icon">
+                                <i class="fa-solid fa-bookmark fa-fw"></i>
+                            </span>
+                            dicom
+                        </a>
+                    </span>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline" data-title="slicer中如何做segmentation">
+            <div class="timeline-tail"></div>
+            <div class="timeline-content">
+                <div class="item-time">2023/11/1</div>
+                <a href="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/">
+                    <h3>slicer中如何做segmentation</h3>
+                </a>
+                <div class="info">
+                    
+                    <span class="category">
+                        <a href="/categories/slicer/">
+                            <span class="icon">
+                                <i class="fa-solid fa-bookmark fa-fw"></i>
+                            </span>
+                            slicer
+                        </a>
+                    </span>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline" data-title="学习用python开发slicer相关插件">
+            <div class="timeline-tail"></div>
+            <div class="timeline-content">
+                <div class="item-time">2023/11/1</div>
+                <a href="/2023/11/01/%E5%AD%A6%E4%B9%A0%E7%94%A8python%E5%BC%80%E5%8F%91slicer%E7%9B%B8%E5%85%B3%E6%8F%92%E4%BB%B6/">
+                    <h3>学习用python开发slicer相关插件</h3>
+                </a>
+                <div class="info">
+                    
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline" data-title="读issunet论文笔记">
+            <div class="timeline-tail"></div>
+            <div class="timeline-content">
+                <div class="item-time">2024/1/24</div>
+                <a href="/2024/01/24/%E8%AF%BBISSUnet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">
+                    <h3>读ISSUnet论文笔记</h3>
+                </a>
+                <div class="info">
+                    
+                    
+                </div>
+            </div>
+        </div>
+        
     </div>
-    
 </div>
 
             <footer id="footer">
     <div id="footer-wrap">
         <div>
             &copy;
-            2022 - 2023 橙橙子的小站
+            2022 - 2024 橙橙子の小站
             <span id="footer-icon">
                 <i class="fa-solid fa-font-awesome fa-fw"></i>
             </span>
