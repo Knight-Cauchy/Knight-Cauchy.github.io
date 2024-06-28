@@ -8,7 +8,7 @@
     <meta name="description" content="good good study, day day up" />
     <meta name="keywords" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="icon" href="/images/avatar1.jpg" />
     <link rel="preconnect" href="https://cdn.staticfile.org" />
 <script src="https://cdn.staticfile.org/vue/3.3.7/vue.global.prod.min.js"></script>
 <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.4.2/css/all.min.css" />
@@ -147,7 +147,7 @@
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div id="home-head">
-    <div id="home-background" ref="homeBackground" data-images="/images/background.jpg"></div>
+    <div id="home-background" ref="homeBackground" data-images="/images/background.jpg,/images/background1.jpeg,/images/background2.jpeg"></div>
     <div id="home-info" @click="homeClick">
         <span class="loop"></span>
         <span class="loop"></span>
@@ -167,10 +167,127 @@
         
 
 <div class="post">
+    <a href="/2024/06/27/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%85%B3/">
+        <h2 class="post-title">服务器使用相关</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/6/27
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/2024/06/27/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%85%B3/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2024/06/27/git%E4%BD%BF%E7%94%A8/">
+        <h2 class="post-title">git使用</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                tools
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/6/27
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/2024/06/27/git%E4%BD%BF%E7%94%A8/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2024/06/27/2023-2024-2%E5%AD%A6%E6%9C%9F%E6%80%BB%E7%BB%93/">
+        <h2 class="post-title">2023-2024-2学期总结</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%83%B3/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                life
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/6/27
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>简单总结我的大二下学期，以后看见了，也不会自责自己一学期啥也没干</p>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/2024/06/27/2023-2024-2%E5%AD%A6%E6%9C%9F%E6%80%BB%E7%BB%93/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2024/01/24/%E8%AF%BBISSUnet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">
         <h2 class="post-title">读ISSUnet论文笔记</h2>
     </a>
     <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                dicom
+            </a>
+        </span>
         
         <span class="date">
             <span class="icon">
@@ -184,7 +301,8 @@
     <div class="description">
         <div class="content" v-pre>
             
-            <h2 id="文章中的要点"><a href="#文章中的要点" class="headerlink" title="文章中的要点"></a>文章中的要点</h2><ol>
+            <span id="more"></span>
+<h2 id="文章中的要点"><a href="#文章中的要点" class="headerlink" title="文章中的要点"></a>文章中的要点</h2><ol>
 <li>挑战赛的内容是后处理的，所以我们的模型也是后处理模型</li>
 <li>输入单通道低剂量的三维图像patch，输出相应的去噪图像patch</li>
 <li>模型如图<img src="/2024/01/24/%E8%AF%BBISSUnet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/image.png" alt="ISS-Unet"></li>
@@ -339,23 +457,7 @@
     <div class="description">
         <div class="content" v-pre>
             
-            <span id="more"></span>
-
-<h3 id="相关官网学习链接"><a href="#相关官网学习链接" class="headerlink" title="相关官网学习链接"></a>相关官网学习链接</h3><p><a target="_blank" rel="noopener" href="https://www.dicomstandard.org/">没什么用的官网</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/DICOM">维基百科介绍</a><br><a target="_blank" rel="noopener" href="https://spujol.github.io/SlicerDICOMTutorial/3DSlicer_DICOMTutorial_SoniaPujol.pdf">slicer的tutorial</a><br><a target="_blank" rel="noopener" href="https://pydicom.github.io/pydicom/stable/old/pydicom_user_guide.html">pydicom的官网documentation</a></p>
-<h3 id="dicom的数据结构"><a href="#dicom的数据结构" class="headerlink" title="dicom的数据结构"></a>dicom的数据结构</h3><p>dcm格式的数据通常以二进制方式存储，包含医学图像有关的多种信息，如患者身份信息，图像采集参数，图像尺寸和像素值。</p>
-<ol>
-<li>文件头（File Header）：包含DICOM文件的元数据，例如文件格式、文件大小、DICOM版本和文件创建时间等。</li>
-<li>数据元素（Data Elements）：包含DICOM文件的实际数据，例如患者身份信息、图像采集参数、图像尺寸和像素值等。</li>
-<li>像素数据（Pixel Data）：包含DICOM文件中的实际医学图像数据。像素数据通常以二进制形式存储，并且可以压缩以减少文件大小。</li>
-</ol>
-<p>dcm标准规定数据元素由三部分组成：标签（Tag）、数据类型（VR）和值（Value）。可以认为前两者是键，可以索引到值。</p>
-<ol>
-<li>tag由两个十六位数字组成，第一个是组号第二个是元素号，如0010，0010表示患者姓名</li>
-<li>VR描述数据元素的格式和长度，dicom中支持多种数据类型包括字符串，整型，浮点数，日期，时间等</li>
-<li>Value是数据元素的实际数据，可以是一个简单的值，也可以是一个序列。</li>
-</ol>
-<p>Pixel Data是dcm文件的核心，一个dcm文件包含一张图像。神经网络深度学习对于dcm数据的预处理很大程度上就是用pydicom把dcm中的Pixel Data读出来转化成PIL图像然后加载到模型里。</p>
-
+            <h3 id="相关官网学习链接"><a href="#相关官网学习链接" class="headerlink" title="相关官网学习链接"></a>相关官网学习链接</h3><p><a target="_blank" rel="noopener" href="https://www.dicomstandard.org/">没什么用的官网</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/DICOM">维基百科介绍</a><br><a target="_blank" rel="noopener" href="https://spujol.github.io/SlicerDICOMTutorial/3DSlicer_DICOMTutorial_SoniaPujol.pdf">slicer的tutorial</a><br><a target="_blank" rel="noopener" href="https://pydicom.github.io/pydicom/stable/old/pydicom_user_guide.html">pydicom的官网documentation</a></p>
             
         </div>
     </div>
@@ -369,7 +471,7 @@
         
         <span class="tag">
             
-            <a href="/tags/dcm/" style="color: #03a9f4">dcm</a>
+            <a href="/tags/dcm/" style="color: #00bcd4">dcm</a>
         </span>
         
     </div>
@@ -392,11 +494,11 @@
         <div id="card-style">
     <div id="card-div">
         <div class="avatar">
-            <img src="/images/avatar.jpg" alt="avatar" />
+            <img src="/images/avatar1.jpg" alt="avatar" />
         </div>
         <div class="name">Knight Cauchy</div>
         <div class="description">
-            <p>Description<br>…</p>
+            <p>good good study, day day up</p>
 
         </div>
         

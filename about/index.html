@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>slicer中如何做segmentation | 橙橙子の小站</title>
+    <title>about | 橙橙子の小站</title>
     <meta name="author" content="Knight Cauchy" />
     <meta name="description" content="good good study, day day up" />
     <meta name="keywords" content="" />
@@ -150,75 +150,29 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>slicer中如何做segmentation</h1>
+        <h1>about</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/11/1
-        </span>
-        
-        <span class="category">
-            <a href="/categories/slicer/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                slicer
-            </a>
+            2024/6/29
         </span>
         
         
     </div>
     
     <div class="content" v-pre>
-        <h2 id="3Dslicer简介"><a href="#3Dslicer简介" class="headerlink" title="3Dslicer简介"></a>3Dslicer简介</h2><p><a target="_blank" rel="noopener" href="https://www.slicer.org/wiki/Documentation/Nightly/Training#DICOM">官网documentation</a>，还是挺有用的，有很多tutorial<br>3D Slicer（也称为Slicer）是一个开源的医学图像处理和可视化平台，用于从不同的医学影像数据中提取、分析和可视化信息。支持多模态图像处理，分割和配准，三维可视化，可模块化可拓展。</p>
-<span id="more"></span>
-
-<h2 id="toolbars介绍"><a href="#toolbars介绍" class="headerlink" title="toolbars介绍"></a>toolbars介绍</h2><h3 id="add-data和load-data"><a href="#add-data和load-data" class="headerlink" title="add data和load data"></a>add data和load data</h3><p><img src="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/image.png" alt="加载数据"><br>add只是打开文件，若不import入dicom database则不会被保存。<br>每次进行标注和处理后的图像组被称作一个scene，保存时会保存一整个scene，包括源dcm文件。</p>
-<h3 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h3><p>用于切换各种模式，如标注模式，设置窗口，打点等<br><img src="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/image-2.png" alt="Alt text"></p>
-<h3 id="Volumes"><a href="#Volumes" class="headerlink" title="Volumes"></a>Volumes</h3><p>体数据，窗宽（Window Width）和窗位（Window Level）是两个常用的参数。窗宽通常用于控制图像的对比度，窗位则用于调整图像的亮度。也可以直接使用已有的适合特定类型的图像的参数设置。<br><img src="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/image-6.png" alt="常用参数设置"></p>
-<h3 id="markups"><a href="#markups" class="headerlink" title="markups"></a>markups</h3><p>对图像进行的标注和测量，并且标注可以在三维中显示。<br><img src="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/image-4.png" alt="工具图标"></p>
-<ol>
-<li>可以打点标注，方便以后查看</li>
-<li>可以测距测角测长度，测曲线周长，测图像面积，常用于看肿瘤大小等</li>
-</ol>
-<h3 id="segment-editor"><a href="#segment-editor" class="headerlink" title="segment editor"></a>segment editor</h3><p>对图像进行更复杂的勾画裁剪修改，可以构建三维体，也可以做分割。<br><img src="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/image-3.png" alt="常用工具，从上到下，从左至右介绍"></p>
-<ol>
-<li><p>no editing 恢复鼠标，不编辑状态</p>
-</li>
-<li><p>paint 涂抹一块区域，可修改颜色和大小，命名等。两个segement之间的关系需要在下方设置<br><img src="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/image-7.png" alt="设置"></p>
-</li>
-<li><p>erase 橡皮，顾名思义</p>
-</li>
-<li><p>grow from seeds 自动向外扩散扩散，在三个视角都手动标注若干个切片（播种），然后自动扩散，软件会把像素值相近的区域全部标注，用于画一些特定的组织器官，例如肺部。<br>tips：有时组织的cd值和背景相似，为防止扩散到外部被标记，需要用另一种标记（others）包围目标组织</p>
-</li>
-<li><p>margin 扩充或缩小标记区域大小</p>
-</li>
-<li><p>smoothing 去噪，使用卷积核处理毛刺使之更光滑。</p>
-</li>
-<li><p>islands 岛，对多个离散的同一颜色的segment进行操作，保留最大的实体，如将PET图像进行threshold之后，用岛保留最大的整体，如脑部，而舍弃其他较小的部位，如膀胱，去噪可用</p>
-</li>
-<li><p>mask volume 打马赛克，覆盖标注区域内或者外。</p>
-</li>
-<li><p>threshold 标注特定像素值区间的点，可以一次性全标记特定密度的组织，当然需要像素值范围比较大</p>
-</li>
-<li><p>draw 更为细致的paint，画圈然后内部都会被标注</p>
-</li>
-<li><p>level tracing 相同CD值的范围自动识别试行。比较方便的勾画区域</p>
-</li>
-<li><p>fill between slices 当所标记物具有三个维度时（如血管），不可能每个切片都画一次，可以使用该功能，每个几个切面paint一次，软件可以自动将他们连接形成连续体</p>
-</li>
-<li><p>hollow 画圈，把实心变空心</p>
-</li>
-<li><p>scissors 剪切工具，画圈删除。可在三维图上操作，删除不要的部分。<br><img src="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/image-8.png" alt="设置界面"></p>
-</li>
-<li><p>logical operators 两个标记之间的交互功能，常用作两张图像的对比，如术前术后对比。<img src="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/image-9.png" alt="Operation"><br>都是一些常用的布尔运算，与或非异或等<br>上面的segment是被操作者，下面的segment是操作者（不会变）</p>
-</li>
-</ol>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><img src="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/image-5.png" alt="Alt text"><br>从左至右依次是调窗口分部视图，鼠标，手动调窗宽窗位，显示markups，截图保存，显示坐标轴和原点，slice intersection<br>最后一个非常重要，打开后可以看见一个视图在另外两个视图的相对方位。</p>
-<h3 id="图片增强前后对比方法"><a href="#图片增强前后对比方法" class="headerlink" title="图片增强前后对比方法"></a>图片增强前后对比方法</h3><p><img src="/2023/11/01/slicer%E4%B8%AD%E5%A6%82%E4%BD%95%E5%81%9Asegmentation/image-10.png" alt="在一个视图同时显示两个图"><br>可以达到渐变效果，同时在增强后图片上做的标注能显示在原片上</p>
+        <h1 id="About-me"><a href="#About-me" class="headerlink" title="About me"></a>About me</h1><p>Hi there, 这里是橙橙子，你也可以叫我KC，一名准大三学生，major 生物医学工程 minor 数学与应用数学。</p>
+<hr>
+<p>这个博客用来放一些碎碎念，以及一些记录，他们不太适合放pyq或者其他什么地方。<br>在这里你可能能看到：</p>
+<ul>
+<li>一些科研打工记录</li>
+<li>数学相关的学习笔记</li>
+<li>生活旅行记录</li>
+<li>一些事情的个人想法</li>
+</ul>
 
     </div>
     
