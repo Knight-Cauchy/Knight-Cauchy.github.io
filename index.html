@@ -40,6 +40,10 @@
 
 <link rel="stylesheet" href="/css/main.css" />
 
+    <!-- 引用 anime.js -->
+    <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- 添加自定义CSS文件 -->
+    <!-- <link rel="stylesheet" href="/css/your_custom_file.css" /> -->
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <div id="layout">
@@ -471,7 +475,7 @@
         
         <span class="tag">
             
-            <a href="/tags/dcm/" style="color: #00bcd4">dcm</a>
+            <a href="/tags/dcm/" style="color: #00a596">dcm</a>
         </span>
         
     </div>
@@ -502,14 +506,18 @@
 
         </div>
         
-        
-        <div class="friend-links">
+        <div class="icon-links">
             
-            <div class="friend-link">
-                <a href="https://knight-cauchy.github.io/">GitHub</a>
-            </div>
+            <span class="icon-link">
+                <a href="/function%20link()%20%7B%20%5Bnative%20code%5D%20%7D">
+                    <i
+                        class="fa- fa- fa-fw"
+                    ></i>
+                </a>
+            </span>
             
         </div>
+        
         
     </div>
 </div>
@@ -545,7 +553,16 @@
         </transition>
         
     </div>
+    <!-- 添加 <canvas> 元素 -->
+        <canvas
+        id="fireworks"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+    ></canvas>
+    <!-- 添加自定义JavaScript文件 -->
+    <!-- <script src="/js/your_custom_file.js"></script> -->
     <script src="/js/main.js"></script>
+    <!-- 添加 fireworks.min.js -->
+    <script src="/js/fireworks.min.js"></script>
     
 </body>
 </html>

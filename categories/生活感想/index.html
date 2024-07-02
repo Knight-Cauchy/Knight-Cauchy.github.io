@@ -38,6 +38,10 @@
 
 <link rel="stylesheet" href="/css/main.css" />
 
+    <!-- 引用 anime.js -->
+    <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- 添加自定义CSS文件 -->
+    <!-- <link rel="stylesheet" href="/css/your_custom_file.css" /> -->
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <div id="layout">
@@ -151,17 +155,6 @@
         
         
         <span>
-            <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                dicom
-            </a>
-        </span>
-        
-        
-        
-        <span>
             <a href="/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%83%B3/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
@@ -175,22 +168,33 @@
         
         
         <span>
-            <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" style="background: #ffa2c4">
+            <a href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="background: #ff7d73">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                tools
+                dicom
             </a>
         </span>
         
         
         
         <span>
-            <a href="/categories/slicer/" style="background: #00bcd4">
+            <a href="/categories/slicer/" style="background: #ffa2c4">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
                 slicer
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" style="background: #ff7d73">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                tools
             </a>
         </span>
         
@@ -249,7 +253,16 @@
         </transition>
         
     </div>
+    <!-- 添加 <canvas> 元素 -->
+        <canvas
+        id="fireworks"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+    ></canvas>
+    <!-- 添加自定义JavaScript文件 -->
+    <!-- <script src="/js/your_custom_file.js"></script> -->
     <script src="/js/main.js"></script>
+    <!-- 添加 fireworks.min.js -->
+    <script src="/js/fireworks.min.js"></script>
     
 </body>
 </html>

@@ -42,6 +42,10 @@
 
 <link rel="stylesheet" href="/css/main.css" />
 
+    <!-- 引用 anime.js -->
+    <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- 添加自定义CSS文件 -->
+    <!-- <link rel="stylesheet" href="/css/your_custom_file.css" /> -->
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <div id="layout">
@@ -164,15 +168,16 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="About-me"><a href="#About-me" class="headerlink" title="About me"></a>About me</h1><p>Hi there, 这里是橙橙子，你也可以叫我KC，一名准大三学生，major 生物医学工程 minor 数学与应用数学。</p>
+        <h1 id="About-me"><a href="#About-me" class="headerlink" title="About me"></a>About me</h1><h2 id="Hi-there-wave"><a href="#Hi-there-wave" class="headerlink" title="Hi there, :wave:"></a>Hi there, :wave:</h2><p>这里是橙橙子，你也可以叫我KC，一名准大三学生，major 生物医学工程 minor 数学与应用数学。</p>
 <hr>
-<p>这个博客用来放一些碎碎念，以及一些记录，他们不太适合放pyq或者其他什么地方。<br>在这里你可能能看到：</p>
-<ul>
+<p>网站是跟风搭建的，用来放一些碎碎念，以及一些记录，他们不太适合放pyq或者其他什么地方。</p>
+<h2 id="在这里你可能能看到："><a href="#在这里你可能能看到：" class="headerlink" title="在这里你可能能看到："></a>在这里你可能能看到：</h2><ul>
 <li>一些科研打工记录</li>
 <li>数学相关的学习笔记</li>
 <li>生活旅行记录</li>
 <li>一些事情的个人想法</li>
 </ul>
+<p>由于主打的是一个记录作用，这个站理想的读者应该只有我自己，但是如果有人喜欢看我也会很开心。<br>有任何问题和想交流的想法欢迎随时联系or评论</p>
 
     </div>
     
@@ -211,7 +216,16 @@
         </transition>
         
     </div>
+    <!-- 添加 <canvas> 元素 -->
+        <canvas
+        id="fireworks"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+    ></canvas>
+    <!-- 添加自定义JavaScript文件 -->
+    <!-- <script src="/js/your_custom_file.js"></script> -->
     <script src="/js/main.js"></script>
+    <!-- 添加 fireworks.min.js -->
+    <script src="/js/fireworks.min.js"></script>
     
     
 
