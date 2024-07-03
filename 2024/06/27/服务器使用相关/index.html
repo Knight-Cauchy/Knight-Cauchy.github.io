@@ -164,11 +164,96 @@
             2024/6/27
         </span>
         
+        <span class="category">
+            <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                tools
+            </a>
+        </span>
+        
         
     </div>
     
     <div class="content" v-pre>
-        
+        <p>科研过程中如果需要跑深度学习的训练，常常可能会用到实验室的服务器计算资源。这里记录一下我的服务器使用和配置相关，以后用其他地方的服务器按流程操作即可。</p>
+<span id="more"></span>
+<h1 id="概念概述"><a href="#概念概述" class="headerlink" title="概念概述"></a>概念概述</h1><p>服务器是需要远程连接的，而且一般是Linux系统，常常通过ssh连接，需要输入服务器管理者给你准备好的账户和密码，选择指定的端口和ip地址。此外，连接之前可能还要连接vpn确保IP在可连接范围内。登录成功以后，所在的目录就应该是&#x2F;home&#x2F;username，这就是一个全新的Linux系统，需要在里面配置一些方便写代码的环境，包括python，git，vscode和一些依赖的库等，这里可能会有一些添加环境变量的问题。一切配置完成后，就可以在本地电脑愉快的写代码了。</p>
+<h1 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h1><p>以下的连接设置都是在本地设置和安装的软件</p>
+<h5 id="直接连接"><a href="#直接连接" class="headerlink" title="直接连接"></a>直接连接</h5><p>最简单的，无论本地是Windows还是Linux，都内置了OpenSSH，直接使用<code>ssh user@hostname</code>，输入密码即可进入。</p>
+<h5 id="Xshell-Xftp"><a href="#Xshell-Xftp" class="headerlink" title="Xshell &amp; Xftp"></a>Xshell &amp; Xftp</h5><p>这两个软件一起用，可以在图形化界面里面操作，Xftp用于传输文件，Xshell可以提供更好看的界面，例如代码高亮，改字体和大小等等。操作起来更舒服。连接方式差不多，创建新的连接，然后输入IP地址和端口号，用户名密码。<br>下载地址：<a target="_blank" rel="noopener" href="https://www.xshell.com/zh/xshell/">Xshell</a> <a target="_blank" rel="noopener" href="https://www.xshell.com/zh/xftp/">Xftp</a></p>
+<h5 id="vscode-Remote-SSH插件"><a href="#vscode-Remote-SSH插件" class="headerlink" title="vscode: Remote-SSH插件"></a>vscode: Remote-SSH插件</h5><p>对于习惯用vscode的人，这个比较好用，安装拓展之后即可在本地vscode通过命令面板连接远程服务器，可以从很方便地本地传文件给服务器，然后可以用图形化界面在远程服务器安装各种插件，可以使用终端调试代码，命令行也是一样用。</p>
+<h1 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h1><h5 id="python库"><a href="#python库" class="headerlink" title="python库"></a>python库</h5><p>这一步是在连接到服务器上后进行的<br>建议使用Anaconda or Miniconda一步到位，前者安装包比较大预装了很多东西，后者轻量，想装什么包就<code>conda install</code> or <code>pip install</code><br>安装过程中问的问题都选yes就行，会自动完成环境变量什么的配置，否则还得手动改.bashrc<br>逐行执行以下代码：</p>
+<pre><code class="bash">wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+source ~/miniconda3/bin/activate
+conda init
+</code></pre>
+<h5 id="git"><a href="#git" class="headerlink" title="git"></a>git</h5><p>git的使用参见另一篇<strong>git使用</strong><br>一般服务器上都会装好git，可以在命令行里输入<code>git --version</code>检查。若没有返回版本号，可以通过：</p>
+<pre><code class="bash">sudo apt update
+sudo apt install git
+</code></pre>
+<p><strong>配置Git</strong></p>
+<ol>
+<li>设置用户名和邮箱：</li>
+</ol>
+<pre><code class="bash">git config --global user.name &quot;Your Name&quot;
+git config --global user.email &quot;your.email@example.com&quot;
+</code></pre>
+<ol start="2">
+<li>验证配置：</li>
+</ol>
+<pre><code class="bash">git config --list
+</code></pre>
+<p><strong>配置SSH密钥</strong></p>
+<ol>
+<li>生成SSH密钥：</li>
+</ol>
+<pre><code class="bash">ssh-keygen -t rsa -b 4096 -C &quot;your.email@example.com&quot;
+</code></pre>
+<p>按提示操作，通常直接回车即可。</p>
+<ol start="2">
+<li>添加SSH密钥到SSH代理：</li>
+</ol>
+<pre><code class="bash">eval &quot;$(ssh-agent -s)&quot;
+ssh-add ~/.ssh/id_rsa
+</code></pre>
+<ol start="3">
+<li>将SSH公钥添加到Git服务：</li>
+</ol>
+<p>查看公钥：</p>
+<pre><code class="bash">cat ~/.ssh/id_rsa.pub
+</code></pre>
+<p>复制公钥并添加到Git服务（例如GitHub、GitLab或Bitbucket）：</p>
+<ul>
+<li>登录你的Git服务账户。</li>
+<li>进入设置（Settings）或SSH和GPG密钥（SSH and GPG keys）。</li>
+<li>添加新的SSH密钥（New SSH key），将复制的公钥粘贴进去并保存。</li>
+</ul>
+<p><strong>验证连接</strong><br>使用以下命令验证是否成功连接到Git服务：</p>
+<pre><code class="bash">ssh -T git@github.com
+</code></pre>
+<p>如果连接成功，会显示欢迎消息。</p>
+<p><strong>创建和克隆仓库</strong></p>
+<ol>
+<li>克隆一个远程仓库：</li>
+</ol>
+<pre><code class="bash">git clone git@github.com:username/repository.git
+</code></pre>
+<ol start="2">
+<li>创建一个新的本地仓库：</li>
+</ol>
+<pre><code class="bash">mkdir new_repository
+cd new_repository
+git init
+</code></pre>
+<ol start="3">
+<li>添加远程仓库：</li>
+</ol>
+<pre><code class="bash">git remote add origin git@github.com:username/repository.git
+</code></pre>
+
     </div>
     
     
