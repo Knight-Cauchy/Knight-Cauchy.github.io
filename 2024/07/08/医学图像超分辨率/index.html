@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>医学图像超分辨率 | 橙橙子の小站</title>
+    <meta name="author" content="Knight Cauchy" />
+    <meta name="description" content="『普通』和『理所当然』究竟是什么呢？" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar1.jpg" />
+    <link rel="preconnect" href="https://cdn.staticfile.org" />
+<script src="https://cdn.staticfile.org/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.staticfile.org/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <!-- 引用 anime.js -->
+    <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- 添加自定义CSS文件 -->
+    <!-- <link rel="stylesheet" href="/css/your_custom_file.css" /> -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>橙橙子の小站</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;橙橙子の小站</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>医学图像超分辨率</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/7/8
+        </span>
+        
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h2 id="超分辨率的任务和概念"><a href="#超分辨率的任务和概念" class="headerlink" title="超分辨率的任务和概念"></a>超分辨率的任务和概念</h2><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p><strong>PET成像原理</strong>：患者注入显影剂之后，显影剂聚集在特定区域，衰变产生正电子，正电子在正常组织中飞行一段时间后慢化，速度匹配之后才能与正常组织中电子结合湮灭（该飞行距离称为正电子射程），产生一对511keV的γ光子。由于正负电子有初始动量，这对电子并不是理想地沿完全相反的方向飞行（非共线性），存在1°以内的误差，探测器半径越大，飞行距离越远，导致的分辨率误差越大。探测器两块晶体在时间窗口内接收到光子，即认为在连线上发生了湮灭，但是同一晶体的不同位置的接收被视为同一位置，晶体的尺寸制约了最大分辨率。虽然对于511keV的光子，路径上的衰减不明显，但是由于符合探测需要确保光子能量接近，飞行路径上两个光子的衰减如果不同会直接导致该事件不被接受，造成符合事件减少，信噪比降低。重建过程中，插值和滤波算法都有可能导致分辨率降低。</p>
+<h3 id="任务内容"><a href="#任务内容" class="headerlink" title="任务内容"></a>任务内容</h3><p>医学图像超分辨率（SR）任务，就是获得分辨率更高的医学图像，提供更加锐利的边界。对于PET图像而言，分辨率不高的表现就是成像系统对理想的点源和线源的响应是两个扩散函数PSF和LSF，其主要的成因包括：</p>
+<ul>
+<li>探测器的闪烁晶体和感光元件的尺寸不是无限小的，存在部分容积效应</li>
+<li>物理效应，包括正电子射程和光子非共线性</li>
+<li>重建算法的插值和滤波，导致采集信号的频率降低</li>
+<li>电子系统固有噪声<br>根据对以上的成因的分析，能够提供一些先验知识，给超分辨带来一定的思路。</li>
+</ul>
+<h3 id="医学图像SR与自然图像SR的区别和联系"><a href="#医学图像SR与自然图像SR的区别和联系" class="headerlink" title="医学图像SR与自然图像SR的区别和联系"></a>医学图像SR与自然图像SR的区别和联系</h3><p>分辨率低，对比度弱，视觉噪声散射，组织复杂模糊。PET成像的模糊核不同于自然图像，和大量解剖和先验知识相关，与空间位置信息相关，因而下面许多DL方法会将位置信息和解剖信息作为输入。<br>对纹理和伪影的容忍度低，对像素强度、对比度更加敏感，不能接受强度方面的误判，否则容易导致误诊。</p>
+<h3 id="读论文的收获"><a href="#读论文的收获" class="headerlink" title="读论文的收获"></a>读论文的收获</h3><h4 id="Image-Resolution-Improvement-Based-on-Sinogram-Super-Resolution-in-PET-2010"><a href="#Image-Resolution-Improvement-Based-on-Sinogram-Super-Resolution-in-PET-2010" class="headerlink" title="Image Resolution Improvement Based on Sinogram Super-Resolution in PET 2010"></a>Image Resolution Improvement Based on Sinogram Super-Resolution in PET 2010</h4><p>wobbling motion, penalized expectation maximization algorithm(添加了正则化项TV的期望最大算法)，将LR的正弦向量视为服从泊松分布的随机变量，均值就是利用了亚像素偏移，在原来迭代算法的基础上进行。迭代公式：<br><img src="/2024/07/08/%E5%8C%BB%E5%AD%A6%E5%9B%BE%E5%83%8F%E8%B6%85%E5%88%86%E8%BE%A8%E7%8E%87/image-1.png" alt="alt text"><br>缺点：该运动是人为的，已知的，离散的，而不是接近实际情况的病人运动，而且只支持平动等极为线性和简单的运动。只做了仿真而没有别的实验，超分效果也十分有限，读这篇论文的主要收获是了解了什么是迭代重建算法，以及TV正则化方法。</p>
+<h4 id="Enhancing-the-image-quality-via-transferred-deep-residual-learning-of-coarse-PET-sinograms-2018"><a href="#Enhancing-the-image-quality-via-transferred-deep-residual-learning-of-coarse-PET-sinograms-2018" class="headerlink" title="Enhancing the image quality via transferred deep residual learning of coarse PET sinograms 2018"></a>Enhancing the image quality via transferred deep residual learning of coarse PET sinograms 2018</h4><p>sinogram, deep residual learning, transfer learning，用了CNN架构，但是不是重建后处理，而是设计了专用于重建前的正弦曲线数据的网络架构，学习从LRS到HRS的映射，添加了迁移学习模块，使用外部数据作为先验知识。<br>正弦曲线LRS，插值正弦BIS，SR正弦SRS，HR正弦HRS。重建之后对应的图像是LRI IRI SRI HRI<br>还比较了在投影域和图像域应用网络的性能差异。超分辨块结构：<img src="/2024/07/08/%E5%8C%BB%E5%AD%A6%E5%9B%BE%E5%83%8F%E8%B6%85%E5%88%86%E8%BE%A8%E7%8E%87/image-2.png" alt="alt text"><br>还考虑了噪声，在干净数据上进行预训练之后在lowdose的有噪声数据上继续训练。<br>实验做的模型仿真，还做了小鼠和脑部。</p>
+<h4 id="Self-Supervised-Super-Resolution-PET-Using-A-Generative-Adversarial-Network-2019"><a href="#Self-Supervised-Super-Resolution-PET-Using-A-Generative-Adversarial-Network-2019" class="headerlink" title="Self Supervised Super-Resolution PET Using A Generative Adversarial Network 2019"></a>Self Supervised Super-Resolution PET Using A Generative Adversarial Network 2019</h4><p>引入HR MR anatomical image, spacial information<br>SRCNN，VDSR等模型需要监督信息，需要配对的HRLR图像进行训练，该模型排除了成对数据的需求<br>method：双gan联合训练，G1从LR到HR，输入是patch的空间信息、VDSR的输出、LRPET图像、HR MR图像，输出SR。D1比较SR和未配对的HR相似度。G2从HR到LR，不过是配对的，对HR使用SVPSF得到LR。</p>
+<p>缺点：需要预训练的有监督CNN作为辅助信息，即一个使用模拟数据训练的VDSR。有的地方感觉很不可靠，例如HRMR需不需要配准？G2的HR和LR’是配对的，LR’是通过HR生成的，那D2比较的就是LR’和与之并不配对的LR。D1比较的也是与之不配对的HR，不知道如何进行。效果甚至不如VDSR，对数据的要求也不能算低，因为需要配对的HRMR。<br><img src="/2024/07/08/%E5%8C%BB%E5%AD%A6%E5%9B%BE%E5%83%8F%E8%B6%85%E5%88%86%E8%BE%A8%E7%8E%87/image-3.png" alt="alt text"></p>
+<h4 id="Joint-Sparse-Coding-Based-Super-Resolution-PET-Image-Reconstruction-2020"><a href="#Joint-Sparse-Coding-Based-Super-Resolution-PET-Image-Reconstruction-2020" class="headerlink" title="Joint Sparse Coding-Based Super-Resolution PET Image Reconstruction 2020"></a>Joint Sparse Coding-Based Super-Resolution PET Image Reconstruction 2020</h4><p>JSC， “coupled feature spaces” ，<br>假设了解剖图和pet在配对的特征空间中，存在一个映射能够使他们互相转换，这样他们有共同的稀疏表示。在经典的惩罚去卷积迭代重建中引入新的正则化项，由解剖图像和HR PET数据训练联合字典，具体字典学习方法还看不懂。<br>只进行了仿真实验，效果比单纯的SC好。</p>
+<h4 id="Super-Resolution-PET-Imaging-Using-Convolutional-Neural-Networks-2020"><a href="#Super-Resolution-PET-Imaging-Using-Convolutional-Neural-Networks-2020" class="headerlink" title="Super-Resolution PET Imaging Using Convolutional Neural Networks 2020"></a>Super-Resolution PET Imaging Using Convolutional Neural Networks 2020</h4><p>patches multimodality imaging, partial volume correction<br>后处理模型，建立LR到HR的映射，CNN学习全局参数 比较浅层和深层CNN以及不同组合下的性能。同样引入空间信息作为输入，在各种指标上效果超过了传统方法。<br>进行了模拟现实和临床实验<br>缺点是有监督，需要配对图像，且监督信息是通过HR设备的不完美采样得到的。</p>
+<h4 id="Super-resolution-in-brain-positron-emission-tomography-using-a-real-time-motion-capture-system-2023"><a href="#Super-resolution-in-brain-positron-emission-tomography-using-a-real-time-motion-capture-system-2023" class="headerlink" title="Super-resolution in brain positron emission tomography using a real-time motion capture system 2023"></a>Super-resolution in brain positron emission tomography using a real-time motion capture system 2023</h4><p>real time motion capture<br>对2010年那篇论文的补充，使用的是外部的红外摄像头进行高精度连续性地运动捕捉。稳健时空校准，列表模式有序子集期望最大化重建算法。以逐个事件为基础，矫正运动对测量反应线LOR的影响。<br>在灵长类动物上进行了实验，得到了不错的结果，具体的数学处理看不懂。<br>无需监督，属于重建算法，用运动中的多个LR生成SR</p>
+<h4 id="Quasi-supervised-Learning-for-Super-resolution-PET"><a href="#Quasi-supervised-Learning-for-Super-resolution-PET" class="headerlink" title="Quasi-supervised Learning for Super-resolution PET"></a>Quasi-supervised Learning for Super-resolution PET</h4><p>cycleGan的延伸 数据patch匹配<br>低监督，假设认为大量的LR和HR之间尽管未配对，但是存在着某种共性，可以通过各种公式计算相似度，进行人为的匹配，包括病人匹配，层面匹配，patch匹配。匹配系数高的pair权重高。网络结构仍然是有监督训练的设计结构。<br><img src="/2024/07/08/%E5%8C%BB%E5%AD%A6%E5%9B%BE%E5%83%8F%E8%B6%85%E5%88%86%E8%BE%A8%E7%8E%87/image-4.png" alt="alt text"><br>损失函数包括对抗损失，循环一致性和反身一致性。通过对输入数据的改变和损失函数超参数的修改，该模型可退化为有监督或无监督学习，算是综合性较好了。让人感到困惑的是简单的相似度匹配（PCC和RBF）就可以达到有监督的效果吗？也没有进行配准。<br>使用脑部pet进行了验证，指标上的效果不错。</p>
+<h3 id="传统重建超分辨方法"><a href="#传统重建超分辨方法" class="headerlink" title="传统重建超分辨方法"></a>传统重建超分辨方法</h3><ul>
+<li>迭代重建，没有看到解析法的论文</li>
+<li>摆动运动，通过多个亚体素运动下的LR，获得高频信息得到HR</li>
+<li>稀疏编码，字典学习，需要迭代优化，使用L1范数确保稀疏性，联合稀疏编码，得到共享的稀疏系数矩阵，把MRI和少量HRPET所含的解剖信息引入，认为他们位于耦合的特征空间</li>
+</ul>
+<h3 id="基于DL的方法"><a href="#基于DL的方法" class="headerlink" title="基于DL的方法"></a>基于DL的方法</h3><p>从自然图像迁移的VDSR，进一步的有SRCNN(浅层和深层) SSSR(双gan) CNN cycleGAN<br>有监督，直接建立从LR到HR的端到端的映射或者插值后建立残差的映射。<br>无监督，有的用gan，添加一些解剖信息作为辅助，patch的空间信息，高分辨的MR</p>
+<h3 id="SR所需的数据获取和预处理模式"><a href="#SR所需的数据获取和预处理模式" class="headerlink" title="SR所需的数据获取和预处理模式"></a>SR所需的数据获取和预处理模式</h3><p>有的直接仿真，这里我还不是很清楚仿真的流程和具体的做法。但是很明确的就是这样可以预设一个非常精确的HR，因为就是我们做的膜具的形状，主要是看传统重建的效果的。传统重建SR的优势就在于此，一旦方法确定，重建即所得，而DL方法训练的后处理模型大多不可迁移，换一个其他的形状可能就无法实现SR。<br>DL方法有监督情况下的配对数据，用上下采样得到HR或者LR，然后拿去训练。</p>
+<h3 id="SR的损失函数和正则化方法"><a href="#SR的损失函数和正则化方法" class="headerlink" title="SR的损失函数和正则化方法"></a>SR的损失函数和正则化方法</h3><ul>
+<li>损失函数多为图像指标或者单纯的正则化</li>
+<li>L1和L2正则化，前者保稀疏性，后者保光滑性。</li>
+<li>TV总变差</li>
+<li>稀疏字典编码（引入解剖信息）</li>
+</ul>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2025 橙橙子の小站
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Knight Cauchy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <!-- 添加 <canvas> 元素 -->
+        <canvas
+        id="fireworks"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+    ></canvas>
+    <!-- 添加自定义JavaScript文件 -->
+    <!-- <script src="/js/your_custom_file.js"></script> -->
+    <script src="/js/main.js"></script>
+    <!-- 添加 fireworks.min.js -->
+    <script src="/js/fireworks.min.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
